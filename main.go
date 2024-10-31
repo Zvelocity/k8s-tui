@@ -21,18 +21,18 @@ func (m model) Init() tea.Cmd {
 }
 
 func fetchPods() tea.Msg {
-	kubeconfig := os.Getenv("KUBECONFIG")
+	kubeconfig := os.Getenv("KUBECONFIG") // or use the default path if you dont have env variable set
 	config, err := clientcmd.BuildConfigFromFlags("", kubeconfig)
 	if err != nil {
 		return err
 	}
 
-	clientset, err := kubernetes.NewForConfig(config)
+	clientset, err := kubernetes.NewForConfig(config) // create a new clientset
 	if err != nil {
 		return err
 	}
 
-	pods, err := clientset.CoreV1().Pods("").List(context.TODO(), v1.ListOptions{})
+	pods, err := clientset.CoreV1().Pods("").List(context.TODO(), v1.ListOptions{}) // get all pods in the cluster
 	if err != nil {
 		return err
 	}
@@ -59,9 +59,9 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	return m, nil
 }
 
-func (m model) View() string {
+func (m model) View() string { // view function to render the UI
 	view := "Hello, Kubernetes!\n\nPods:\n"
-	for _, pod := range m.pods {
+	for _, pod := range m.pods { // loop through the pods and display them
 		view += fmt.Sprintf("- %s\n", pod)
 	}
 	view += "\nPress Ctrl+C or 'q' to quit.\n"
