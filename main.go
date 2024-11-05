@@ -70,7 +70,8 @@ func (m model) View() string { // view function to render the UI
 
 func main() {
 	p := tea.NewProgram(model{message: "Welcome to your TUI!"})
-	if err := p.Start(); err != nil {
+	_, err := p.Run()
+	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error starting program: %v\n", err)
 		os.Exit(1)
 	}
