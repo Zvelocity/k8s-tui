@@ -1,1 +1,1 @@
-# bubletea-k8s
+# k8s-tui
