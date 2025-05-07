@@ -1,25 +1,17 @@
+// main.go
 package main
 
 import (
-	"github.com/rivo/tview"
+	"github.com/zvelocity/k8s-tui/ui"
+	"log"
 )
 
 func main() {
-	app := tview.NewApplication()
+	log.Println("Starting k8s-tui...")
 
-	// Create a simple text view to start
-	textView := tview.NewTextView().
-		SetText("K8s TUI!\n").
-		SetTextAlign(tview.AlignCenter).
-		SetDynamicColors(true)
+	app := ui.NewApp()
 
-	// Create a flex layout to hold our components
-	flex := tview.NewFlex().
-		SetDirection(tview.FlexRow).
-		AddItem(textView, 0, 1, true)
-
-	// Run the application
-	if err := app.SetRoot(flex, true).EnableMouse(true).Run(); err != nil {
-		panic(err)
+	if err := app.Run(); err != nil {
+		log.Fatalf("Error running application: %v", err)
 	}
 }
